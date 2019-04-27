@@ -2,15 +2,26 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { GeneralService } from './general.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MemoryFormComponent } from './memory-form/memory-form.component';
+import { MemoryShowComponent } from './memory-show/memory-show.component';
+import { MemoryCardComponent } from './memory-card/memory-card.component'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MemoryFormComponent,
+    MemoryShowComponent,
+    MemoryCardComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    GeneralService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
