@@ -1,0 +1,27 @@
+.container{
+    padding: 0 4em !important;
+}
+
+@media (min-width: 766px) { 
+    .container{
+        width: 100%;
+    }
+}
+
+.hole{
+    background-color: rgba(178, 190, 195, 0.3);
+    min-height: 4em;
+    border-radius: 5px;
+    padding: 0.8em;
+    position: relative;
+}
+
+.hole-starting{
+    position: absolute;
+    top:0;
+}
+
+.hole-ending{
+    position: absolute;
+    bottom: 0;
+}

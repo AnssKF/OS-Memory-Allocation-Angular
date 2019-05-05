@@ -1,0 +1,19 @@
+
+.address-lable{
+    position: relative;
+}
+
+.address-lable span{
+    background-color: #e74c3c;
+    border-radius: 8px;
+    padding: 3px 10px;
+    color: #fff;
+}
+
+.address-lable hr{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+}

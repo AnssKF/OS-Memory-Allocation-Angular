@@ -1,3 +1,112 @@
-<p>
-  memory-form works!
-</p>
+<section class="text-center mb-3">
+  <div class="row">
+    <div class="col-4">
+      <label for="first-fit-radio" class="btn cursor-ptr w-100" [ngClass]=" sort_algorithm.value == 'first_fit' ? 'selected' : 'not-selected' " >First Fit</label>
+    </div>
+    <div class="col-4">
+        <label for="best-fit-radio" class="btn cursor-ptr w-100" [ngClass]=" sort_algorithm.value == 'best_fit' ? 'selected' : 'not-selected' ">Best Fit</label>
+    </div>
+    <div class="col-4">
+        <label for="worst-fit-radio" class="btn cursor-ptr w-100" [ngClass]=" sort_algorithm.value == 'worst_fit' ? 'selected' : 'not-selected' ">Worst Fit</label>
+    </div>
+  </div>
+
+  <input class="form-check-input" type="radio" id="first-fit-radio" value="first_fit"
+    [formControl]="sort_algorithm" style="display:none;">
+    <input class="form-check-input" type="radio" id="best-fit-radio" value="best_fit"
+      [formControl]="sort_algorithm" style="display:none;">
+    <input class="form-check-input" type="radio" id="worst-fit-radio" value="worst_fit"
+      [formControl]="sort_algorithm" style="display:none;">
+</section>
+
+<!--  -->
+
+<label for="memory-size-lable" class="inp mb-5">
+  <input type="number" id="memory-size-lable" min="1" placeholder="&nbsp;" [formControl]="memory_size">
+  <span class="label">Memory Size</span>
+  <span class="border"></span>
+</label>
+
+
+
+<form [formGroup]="holes_form" (ngSubmit)="onSubmitHolesForm()">
+  
+  <label for="hole-add-lable" class="inp mb-3">
+    <input type="number" id="hole-add-lable" min="1" placeholder="&nbsp;" formControlName="starting_address">
+    <span class="label">Hole Starting Adress</span>
+    <span class="border"></span>
+  </label>
+
+  <div class="d-flex">
+    <label for="hole-size-lable" class="inp mb-3 mr-2">
+      <input type="number" id="hole-size-lable" min="1" placeholder="&nbsp;" formControlName="size">
+      <span class="label">Hole Size</span>
+      <span class="border"></span>
+    </label>
+    
+    <button type="submit" class="btn btn-outline-color" [disabled]="holes_form.invalid">Add</button>
+  </div>
+</form>
+
+<hr>
+
+<form [formGroup]="process_form" (ngSubmit)="onSubmitProcessForm()">
+
+  <h6 class="text-color">Process</h6>
+
+  <div class="row">
+    <div class="col-6">
+        <label for="process-name-lable" class="inp mb-3">
+          <input type="text" id="process-name-lable" placeholder="&nbsp;" formControlName="name">
+          <span class="label">name</span>
+          <span class="border"></span>
+        </label>
+    </div>
+    <div class="col-6">
+        <label for="process-code-lable" class="inp mb-3">
+          <input type="number" id="process-code-lable" placeholder="&nbsp;" formControlName="code">
+          <span class="label">Code</span>
+          <span class="border"></span>
+        </label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+        <label for="process-segments-lable" class="inp mb-3">
+          <input type="number" id="process-segments-lable" placeholder="&nbsp;" formControlName="segments_number">
+          <span class="label">Segments</span>
+          <span class="border"></span>
+        </label>
+    </div>
+    <div class="col-6">
+        <label for="process-data-lable" class="inp mb-3">
+          <input type="text" id="process-data-lable" placeholder="&nbsp;" formControlName="data">
+          <span class="label">Data</span>
+          <span class="border"></span>
+        </label>
+    </div>
+  </div>
+  <ng-container formArrayName="segments">
+    <div class="row" *ngFor="let seg of get_process_seg.controls; let i=index">
+      <div class="col-3 text-color">
+        seg-{{i}}
+      </div>
+      <div class="col-9">
+        <!-- segments array -->
+        <label for="process-size-lable-{{i}}" class="inp mb-3">
+          <input type="number" id="process-size-lable-{{i}}" placeholder="&nbsp;" [formControlName]="i">
+          <span class="label">Size</span>
+          <span class="border"></span>
+        </label>
+      </div>
+    </div>
+  </ng-container>
+  
+  <div class="row">
+    <div class="col-12 px-1">
+      <button type="submit" class="btn btn-block btn-outline-color" [disabled]="process_form.invalid">Add</button>
+    </div>
+  </div>
+
+</form>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GeneralService, Process, Hole } from '../general.service';
 
 @Component({
   selector: 'app-memory-show',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MemoryShowComponent implements OnInit {
 
-  constructor() { }
+  hole_process_list:Array<{hole: Hole, processes: Process[]}>  = [];
+  memory_size:number = 99999999;
+
+  constructor(private generalService:GeneralService) { }
 
   ngOnInit() {
+      this.generalService.get_sorted_process().valueChange.subscribe(
+        sorted_process =>{
+          this.hole_process_list = sorted_process;
+        }
+      );
+
+      this.generalService.get_memory_size().valueChange.subscribe(
+        size => {
+          this.memory_size = size;
+        }
+      );
   }
 
 }

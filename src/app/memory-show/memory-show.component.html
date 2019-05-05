@@ -1,3 +1,72 @@
-<p>
-  memory-show works!
-</p>
+<div class="container">
+  <div class="memory">
+
+    <!-- memory start lable -->
+    <app-adress-lable [lable]="0"></app-adress-lable>
+    <!-- ./memory start lable -->
+
+    <!-- hole -->
+    <ng-container *ngFor="let block of hole_process_list; let i=index"> 
+
+      <!-- hole start lable -->
+      <ng-container *ngIf="i==0">
+        <app-adress-lable [lable]="block.hole.starting_address" *ngIf="block.hole.starting_address != 0"></app-adress-lable>
+      </ng-container>
+      <app-adress-lable [lable]="block.hole.starting_address" *ngIf="i!=0"></app-adress-lable>
+      <!-- ./hole start lable -->
+
+      <div class="row">
+        <div class="col-11 offset-1">
+          <div class="hole">
+            <!-- hole process -->
+            <ng-container *ngFor="let process of block.processes; let j=index">
+
+              <!-- process start lable -->
+              <app-adress-lable [lable]="process.starting_add" *ngIf="process.starting_add!=block.hole.starting_address"></app-adress-lable>
+              <!-- ./process start lable -->
+              
+              <!-- process -->
+              <div class="row">
+                <div class="col-11 offset-1">
+                  <app-memory-card [starting_add]="process.starting_add" [name]="process.name" [size]="process.size"
+                  [code]="process.code" [data]="process.data"></app-memory-card>
+                </div>
+              </div>
+              <!-- ./process -->
+
+              <!-- process ends lable -->
+              <ng-container *ngIf="block.processes[j+1]">
+                <app-adress-lable [lable]="process.starting_add + process.size" 
+                *ngIf="(process.starting_add + process.size) != (block.processes[j+1].starting_add)"
+                ></app-adress-lable>
+              </ng-container>
+              <ng-container *ngIf="!block.processes[j+1]">
+                <app-adress-lable [lable]="process.starting_add + process.size" 
+                *ngIf="(process.starting_add + process.size) != (block.hole.starting_address + block.hole.size)"
+                ></app-adress-lable>
+              </ng-container>
+              <!-- ./process ends lable -->
+
+            </ng-container>
+            <!-- ./hole process -->
+          </div>
+        </div>
+      </div>
+
+      <!-- hole end lable -->
+      <ng-container *ngIf="hole_process_list[i+1]">
+        <app-adress-lable [lable]="block.hole.starting_address+block.hole.size" *ngIf="(block.hole.starting_address+block.hole.size) != hole_process_list[i+1].hole.starting_address"></app-adress-lable>
+      </ng-container>
+      <ng-container *ngIf="!hole_process_list[i+1]">
+        <app-adress-lable [lable]="block.hole.starting_address+block.hole.size" *ngIf="(block.hole.starting_address+block.hole.size) != memory_size"></app-adress-lable>
+      </ng-container>
+      <!-- ./hole end lable -->
+
+    </ng-container> 
+    <!-- ./hole -->
+
+    <!-- memory ends lable-->
+    <app-adress-lable [lable]="memory_size"></app-adress-lable>
+    <!-- ./memory ends lable-->
+  </div>
+</div>
