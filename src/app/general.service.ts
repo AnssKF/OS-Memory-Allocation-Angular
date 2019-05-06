@@ -13,7 +13,7 @@ export class GeneralService {
   sort_algorithm:string = 'first_fit';
   onChangeSortAlgorithm = new Subject<string>();
 
-  sorted_process:Array<{hole: Hole, processes: Process[]}> = [];
+  sorted_process:Block[] = [];
   onChangeSortedProcess = new Subject<Array<{hole: Hole, processes: Process[]}>>();
 
   input_process:Process[] = [];
@@ -136,4 +136,8 @@ export interface Hole{
   size:number
   starting_address:number,
   extra?:any
+}
+
+export interface Block{
+  hole: Hole, processes: Process[]
 }

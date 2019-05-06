@@ -46,6 +46,12 @@
     
     <button type="submit" class="btn btn-outline-color" [disabled]="holes_form.invalid">Add</button>
   </div>
+  <ng-container *ngIf="hole_form_error != null">
+    <div class="text-danger m-1">
+      {{hole_form_error}}
+    </div>
+  </ng-container>
+  
 </form>
 
 <hr>
@@ -108,5 +114,10 @@
       <button type="submit" class="btn btn-block btn-outline-color" [disabled]="process_form.invalid">Add</button>
     </div>
   </div>
-
+  <ng-container *ngIf="process_form_error != null">
+    <div class="text-danger m-1">
+      {{process_form_error}}
+    </div>
+  </ng-container>
+  
 </form>

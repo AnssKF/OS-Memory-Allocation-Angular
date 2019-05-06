@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { GeneralService } from '../general.service';
+import { valid_hole, valid_segment } from '../memory-algorithm';
 
 @Component({
   selector: 'app-memory-form',
@@ -20,6 +21,7 @@ export class MemoryFormComponent implements OnInit {
     starting_address: [null,[Validators.required]],
     size: [null,[Validators.required,Validators.min(1)]]
   });
+  hole_form_error:string = null;
 
   process_form = this.formbuilder.group({
     name: [null,[Validators.required]],
@@ -30,6 +32,7 @@ export class MemoryFormComponent implements OnInit {
     code: [null,[Validators.required]],
     data: [null,[Validators.required]],
   });
+  process_form_error:string = null;
 
   get get_process_seg(){
     return this.process_form.get('segments') as FormArray;
@@ -72,30 +75,64 @@ export class MemoryFormComponent implements OnInit {
   }
 
   onSubmitHolesForm(){
-    this.generalService.push_hole({
+
+    let flag = valid_hole(this.memory_size.value,this.generalService.get_holes().value,{
       starting_address: this.holes_form.value.starting_address,
       size: this.holes_form.value.size
     });
+    
+    if(flag.status){
+      this.hole_form_error = null;
+      this.generalService.push_hole({
+        starting_address: this.holes_form.value.starting_address,
+        size: this.holes_form.value.size
+      });
+      this.holes_form.reset();
+    }else{
+      this.hole_form_error = flag.msg;
+    }
 
-    this.holes_form.reset();
   }
 
   onSubmitProcessForm(){
     // console.log(this.process_form.value)
-
+    let valid:boolean = true;
+    
     this.get_process_seg.value.forEach((seg_size,index) => {
-      this.generalService.push_process({
-        id:         this.current_process_id,
+      
+      let flag = valid_segment(this.generalService.get_memory_size().value,
+      this.generalService.get_sorted_process().value,{
+        id:         null,
         name:       this.process_form.value.name + 'seg-' + index,
         code:       this.process_form.value.code,
         data:       this.process_form.value.data,
         starting_add: null,
         size:       seg_size,
       });
-    });
-    this.current_process_id++;
+      if(flag.status == false){
+        valid = false;
+        this.process_form_error = flag.msg;
+      }else{
+        valid = true;
+        this.process_form_error = null;
+      }
+    });  
+      
+    if(valid){
+      this.get_process_seg.value.forEach((seg_size,index) => {
+        this.generalService.push_process({
+          id:         this.current_process_id,
+          name:       this.process_form.value.name + 'seg-' + index,
+          code:       this.process_form.value.code,
+          data:       this.process_form.value.data,
+          starting_add: null,
+          size:       seg_size,
+        });
+      });
+      this.current_process_id++;
+      this.process_form.reset();
+    }
 
-    this.process_form.reset();
   }
 
 }
