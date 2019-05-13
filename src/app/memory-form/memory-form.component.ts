@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
-import { GeneralService } from '../general.service';
+import { GeneralService, Process } from '../general.service';
 import { valid_hole, valid_segment } from '../memory-algorithm';
 
 @Component({
@@ -93,44 +93,44 @@ export class MemoryFormComponent implements OnInit {
     }
 
   }
-
+  
   onSubmitProcessForm(){
-    // console.log(this.process_form.value)
-    let valid:boolean = true;
     
+    // console.log(this.process_form.value)
+
+    let process_segments:Process[] = [];
+
     this.get_process_seg.value.forEach((seg_size,index) => {
-      
-      let flag = valid_segment(this.generalService.get_memory_size().value,
-      this.generalService.get_sorted_process().value,{
+      process_segments.push({
         id:         null,
-        name:       this.process_form.value.name + 'seg-' + index,
+        name:       this.process_form.value.name + ' seg-' + index,
         code:       this.process_form.value.code,
         data:       this.process_form.value.data,
         starting_add: null,
         size:       seg_size,
       });
+    });
+
+    let valid:boolean = true;
+    process_segments.forEach(seg=>{
+      let flag = valid_segment(this.generalService.get_memory_size().value,
+      this.generalService.get_sorted_process().value, seg);
+      
       if(flag.status == false){
         valid = false;
         this.process_form_error = flag.msg;
       }else{
         valid = true;
-        this.process_form_error = null;
-      }
-    });  
-      
+      }  
+    });
+    
     if(valid){
-      this.get_process_seg.value.forEach((seg_size,index) => {
-        this.generalService.push_process({
-          id:         this.current_process_id,
-          name:       this.process_form.value.name + 'seg-' + index,
-          code:       this.process_form.value.code,
-          data:       this.process_form.value.data,
-          starting_add: null,
-          size:       seg_size,
-        });
+      process_segments.forEach(seg=>{
+        this.generalService.push_process(seg);
       });
       this.current_process_id++;
       this.process_form.reset();
+      this.process_form_error = null;
     }
 
   }

@@ -1,8 +1,47 @@
 import { Hole, Process, Block } from './general.service';
 
+export function concatinate_holes(holes:Hole[]){
+    holes = holes.slice();
+
+    holes.sort((a,b)=>{
+        // sort on starting address
+        if(a.starting_address < b.starting_address){
+            return -1; // 1 before 2
+        }else if (a.starting_address > b.starting_address){
+            return 1; // 2 before 1
+        }
+        return 0; // no change
+    });
+
+    for(let i=0; i<holes.length; i++){
+        let current_starting_address = holes[i].starting_address;
+        let current_ending_address = holes[i].starting_address + holes[i].size;
+
+        if(holes[i+1]){
+            let next_starting_address = holes[i+1].starting_address;
+            let next_ending_address = holes[i+1].starting_address + holes[i+1].size;
+    
+    
+            if( next_starting_address <= current_ending_address ){
+                // expand hole
+                holes[i] = {
+                    starting_address: current_starting_address ,
+                    size: (current_ending_address > next_ending_address) ? current_ending_address : (next_ending_address - current_starting_address)
+                }
+                // delete next hole
+                holes.splice(i+1,1);
+                
+                i--;
+            }
+        }
+    }
+
+    return holes;
+}
+
 export function first_fit(memory_size:number, holes:Hole[], processes:Process[]){
     processes = processes.slice();
-    holes = holes.slice();
+    holes = concatinate_holes(holes);
 
     holes.sort((a,b)=>{
         // sort on starting address
@@ -60,7 +99,7 @@ export function first_fit(memory_size:number, holes:Hole[], processes:Process[])
 
 export function best_fit(memory_size:number, holes:Hole[], processes:Process[]){
     processes = processes.slice();
-    holes = holes.slice();
+    holes = concatinate_holes(holes);
 
     holes.sort((a,b)=>{
         // sort on smallest size
@@ -125,7 +164,7 @@ export function best_fit(memory_size:number, holes:Hole[], processes:Process[]){
 
 export function worst_fit(memory_size:number, holes:Hole[], processes:Process[]){
     processes = processes.slice();
-    holes = holes.slice();
+    holes = concatinate_holes(holes);
 
     holes.sort((a,b)=>{
         // sort on smallest size
@@ -218,13 +257,6 @@ export function valid_hole(memory_size:number,holes:Hole[],hole:Hole):{status:bo
         }
     });
 
-    if(flag){
-        return {
-            status: false,
-            msg: 'Hole intersects with another'
-        }
-    }
-
     return {
         status:true,
         msg: 'Valid Hole'
@@ -253,5 +285,12 @@ export function valid_segment(memory_size:number,allocated_memory:Block[],segmen
         status: true,
         msg: 'Valid Process'
     }
+
+}
+
+export function add_old(memory_size:number, allocated_memory:Block[]){
+    allocated_memory = allocated_memory.slice();
+
+    // code here
 
 }
