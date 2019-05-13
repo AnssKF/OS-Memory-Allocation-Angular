@@ -111,7 +111,7 @@ export class GeneralService {
     }
   }
   /********************************* */
-
+  
   get_sorted_process(){
     return {
       value: this.sorted_process.slice(),
@@ -119,7 +119,24 @@ export class GeneralService {
     }
   }
   
+  /********************************* */
 
+  reset(){
+    this.memory_size = 0;
+    this.onChangeMemorySize.next(this.memory_size);
+
+    this.sort_algorithm = 'first_fit';
+    this.onChangeSortAlgorithm.next(this.sort_algorithm);
+
+    this.sorted_process = [];
+    this.onChangeSortedProcess.next(this.sorted_process);
+
+    this.input_process = [];
+    this.onChangeInputProcess.next(this.input_process);
+    
+    this.input_holes = [];
+    this.onChangeHoles.next(this.input_holes);
+  }
 }
 
 export interface Process{
