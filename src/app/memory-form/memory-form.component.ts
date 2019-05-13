@@ -74,6 +74,14 @@ export class MemoryFormComponent implements OnInit {
     })
   }
 
+  reset(){
+    this.memory_size.reset();
+    this.sort_algorithm.patchValue('first_fit');
+    this.holes_form.reset();
+    this.process_form.reset();
+    this.generalService.reset();
+  }
+
   onSubmitHolesForm(){
 
     let flag = valid_hole(this.memory_size.value,this.generalService.get_holes().value,{
