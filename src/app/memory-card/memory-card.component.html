@@ -1,5 +1,6 @@
 <div class="card mb-3 position-relative">
   <div class="card-body">
-    {{name}} - {{size}} - {{code}} - {{data}}
+    Name: {{process.name}} | Size:{{process.size}} <small>Code:{{process.code}} | Data:{{process.data}}</small>
   </div>
+  <span class="text-danger p-2 position-absolute delete-btn" (click)="delete_process(process.id)">x</span>
 </div>

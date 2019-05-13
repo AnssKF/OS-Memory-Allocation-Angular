@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { GeneralService } from '../general.service';
 
 @Component({
   selector: 'app-memory-card',
@@ -7,18 +8,17 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MemoryCardComponent implements OnInit {
 
-  @Input() starting_add = null;
-  @Input() name:string = null;
-  @Input() size:Number = null;
-  @Input() segments:Number = null;
-  @Input() code:Number = null;
-  @Input() data:String = null;
+  @Input() process = null;
 
-  @Input() last_one:boolean = true;
-
-  constructor() { }
+  constructor(private generalService:GeneralService) { }
 
   ngOnInit() {
+  }
+
+  delete_process(process_id:number){
+    if(confirm('This will delete app segment related! Are you sure?')){
+      this.generalService.delete_process(process_id);
+    }
   }
 
 }

@@ -102,7 +102,7 @@ export class MemoryFormComponent implements OnInit {
 
     this.get_process_seg.value.forEach((seg_size,index) => {
       process_segments.push({
-        id:         null,
+        id:         this.current_process_id,
         name:       this.process_form.value.name + ' seg-' + index,
         code:       this.process_form.value.code,
         data:       this.process_form.value.data,

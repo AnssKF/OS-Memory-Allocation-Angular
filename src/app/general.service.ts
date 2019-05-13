@@ -90,8 +90,7 @@ export class GeneralService {
     /**
      * delete process from input process
      */
-    let index = this.input_process.findIndex(el => el.id == id);
-    this.input_process.splice(index,1);
+    this.input_process = (this.input_process.filter(el=> el.id != id));
     this.onChangeInputProcess.next(this.input_process);
   }
   /********************************* */
