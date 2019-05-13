@@ -19,7 +19,18 @@ function add_old(memory_size, allocated_memory) {
       starting_address: 0
       //extra?:any
     };
-    new_block = { hole: new_hole };
+    new_processes = [
+      {
+        id: 0,
+        name: "old processes",
+        size: allocated_memory[0]["hole"]["starting_address"],
+        code: 0,
+        data: 0,
+        starting_add: 0
+      }
+    ];
+
+    new_block = { hole: new_hole, processes: new_processes };
     allocated_memory.unshift(new_block);
   }
   for (let i = 0; i < allocated_memory.length - 1; i++) {
@@ -38,7 +49,17 @@ function add_old(memory_size, allocated_memory) {
           allocated_memory[i]["hole"]["size"]
         //extra?:any
       };
-      new_block = { hole: new_hole };
+      new_processes = [
+        {
+          id: 0,
+          name: "old processes",
+          size: new_hole["size"],
+          code: 0,
+          data: 0,
+          starting_add: new_hole["starting_address"]
+        }
+      ];
+      new_block = { hole: new_hole, processes: new_processes };
       allocated_memory.splice(i + 1, 0, new_block);
     }
   }
@@ -60,7 +81,17 @@ function add_old(memory_size, allocated_memory) {
         ] + allocated_memory[allocated_memory.length - 1]["hole"]["size"]
       //extra?:any
     };
-    new_block = { hole: new_hole };
+    new_processes = [
+      {
+        id: 0,
+        name: "old processes",
+        size: new_hole["size"],
+        code: 0,
+        data: 0,
+        starting_add: new_hole["starting_address"]
+      }
+    ];
+    new_block = { hole: new_hole, processes: new_processes };
     allocated_memory.push(new_block);
   }
   console.log(allocated_memory.slice());
