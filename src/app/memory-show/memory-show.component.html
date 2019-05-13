@@ -17,7 +17,7 @@
 
       <div class="row">
         <div class="col-11 offset-1">
-          <div class="hole">
+          <div class="hole" [ngClass]="{'not-hole': (!!block.hole.extra.type && block.hole.extra.type == -1)}">
             <!-- hole process -->
             <ng-container *ngFor="let process of block.processes; let j=index">
 

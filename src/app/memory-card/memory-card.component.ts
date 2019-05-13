@@ -21,4 +21,11 @@ export class MemoryCardComponent implements OnInit {
     }
   }
 
+  delete_oldprocess(starting_address:number,size:number){
+    this.generalService.push_hole({
+      size:size,
+      starting_address:starting_address,
+    })
+  }
+
 }

@@ -16,6 +16,10 @@
     position: relative;
 }
 
+.not-hole{
+    background-color: rgba(178, 190, 195, 0.05);
+}
+
 .hole-starting{
     position: absolute;
     top:0;

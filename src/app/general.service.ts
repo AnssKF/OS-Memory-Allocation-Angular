@@ -143,8 +143,6 @@ export interface Process{
   id:number,
   name:string,
   size:number,
-  code:number,
-  data:number,
   starting_add:number
 }
 

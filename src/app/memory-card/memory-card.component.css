@@ -3,6 +3,10 @@
     border: none;
 }
 
+.old-process{
+    background-color: rgba(52, 73, 94, 0.05);
+}
+
 .delete-btn{
     top: 5px;
     right: 5px;

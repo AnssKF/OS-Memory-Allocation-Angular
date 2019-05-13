@@ -29,8 +29,6 @@ export class MemoryFormComponent implements OnInit {
     segments: this.formbuilder.array([
       new FormControl(null,[Validators.required]),
     ]),
-    code: [null,[Validators.required]],
-    data: [null,[Validators.required]],
   });
   process_form_error:string = null;
 
@@ -112,8 +110,6 @@ export class MemoryFormComponent implements OnInit {
       process_segments.push({
         id:         this.current_process_id,
         name:       this.process_form.value.name + ' seg-' + index,
-        code:       this.process_form.value.code,
-        data:       this.process_form.value.data,
         starting_add: null,
         size:       seg_size,
       });

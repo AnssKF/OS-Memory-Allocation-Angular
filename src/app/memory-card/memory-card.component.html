@@ -1,6 +1,9 @@
-<div class="card mb-3 position-relative">
+<div class="card mb-3 position-relative" [ngClass]="{'old-process': process.id == -1}">
   <div class="card-body">
-    Name: {{process.name}} | Size:{{process.size}} <small>Code:{{process.code}} | Data:{{process.data}}</small>
+    Name: {{process.name}} | Size:{{process.size}}
   </div>
-  <span class="text-danger p-2 position-absolute delete-btn" (click)="delete_process(process.id)">x</span>
+  <span class="text-danger p-2 position-absolute delete-btn" (click)="delete_oldprocess(process.starting_add,process.size)"
+    *ngIf="process.id == -1">x</span>
+  <span class="text-danger p-2 position-absolute delete-btn" (click)="delete_process(process.id)"
+    *ngIf="process.id != -1">x</span>
 </div>
